@@ -1,0 +1,90 @@
+import cv2
+import numpy as np
+
+#kaunsa photo kiska hai
+#bhaskar 1
+#ganshyam 2
+# raghav 3
+# yash 4
+# omkar 5
+# chintan 6
+
+
+image1 = cv2.imread(r'D:\project X\venv\2apptitude test\Bhaskar.jpg')
+
+image1 = cv2.resize(image1, (300, 400))  # Resize to your desired size
+
+image2 = cv2.imread(r'D:\project X\venv\2apptitude test\Ganshyam.jpg')
+image2 = cv2.resize(image2, (300, 400)) 
+
+image3 = cv2.imread(r'D:\project X\venv\2apptitude test\Raghav.jpg')
+image3 = cv2.resize(image3, (300, 400)) 
+
+image4 = cv2.imread(r'D:\project X\venv\2apptitude test\Yash.jpg')
+image4 = cv2.resize(image4, (300, 400)) 
+
+image5 = cv2.imread(r'D:\project X\venv\2apptitude test\Omkar.jpg')
+image5 = cv2.resize(image5, (300, 400)) 
+
+image6 = cv2.imread(r'D:\project X\venv\2apptitude test\Chintan.jpg')
+image6 = cv2.resize(image6, (300, 400)) 
+
+imgs = [image1, image2, image3, image4, image5, image6]
+
+def showoriginals():
+    
+    for i, img in enumerate(imgs): cv2.imshow(f'image{i+1}', img)
+    return 
+
+showoriginals()
+
+def brighten(img,value):
+   
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    img[:, :, 2] = img[:, :, 2] * value
+    img = cv2.cvtColor(img, cv2.COLOR_HSV2BGR)
+    return  img
+
+def grayof(img):
+    imgg=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    return imgg
+
+def threshof(img):
+    img = grayof(img)
+    _, threshimg = cv2.threshold(img, 10, 255, cv2.THRESH_BINARY)
+    return threshimg
+
+def addimage(img1,img2,img3):
+    add=cv2.add(img1,img2,img3)
+    return add
+def invert(img):
+    img = 255-img
+    return img
+
+image1brighter= brighten(image1,15)
+image2brighter= brighten(image2,25)
+image3brighter= brighten(image3,25)
+cv2.imshow('image 1 but brighter', image1brighter)
+cv2.imshow('image 2 but brighter', image2brighter)
+cv2.imshow('image 3 but brighter', image3brighter)
+image4brighter= brighten(image4,25)
+image5brighter= brighten(image5,25)
+image6brighter= brighten(image6,25)
+cv2.imshow('image 4 but brighter', image4brighter)
+cv2.imshow('image 5 but brighter', image5brighter)
+cv2.imshow('image 6 but brighter', image6brighter)
+add123=addimage(image1brighter,image2brighter,image3brighter)
+cv2.imshow('addition of bright of 1 2 3 ',add123)
+add456=addimage(image4brighter,image5brighter,image6brighter)
+cv2.imshow('addition of bright of 4 5 6  ',add456)
+
+cv2.imshow("invert 1 brighter", invert(image1brighter))
+cv2.imshow("invert 1", invert(image1))
+
+
+addedall= cv2.add(add123,add456)
+cv2.imshow("cumulation of all images",addedall)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
